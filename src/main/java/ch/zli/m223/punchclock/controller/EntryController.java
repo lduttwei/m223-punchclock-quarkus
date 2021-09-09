@@ -22,6 +22,7 @@ import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
 @Path("/entries")
 @Tag(name = "Entries", description = "Handling of entries")
+@RolesAllowed({ "User", "Admin" })
 public class EntryController {
 
     @Inject
@@ -57,7 +58,6 @@ public class EntryController {
         setEntry(entry);
         return entryService.updateEntry(entry);
     }
-
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)

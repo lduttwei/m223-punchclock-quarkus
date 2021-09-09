@@ -22,6 +22,7 @@ public class UserController {
     @Inject
     UserService userService;
 
+    @RolesAllowed({ "User", "Admin" })
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<User> list(@Context SecurityContext ctx) {
@@ -35,6 +36,7 @@ public class UserController {
         return userService.creatUser(user);
     }
 
+    @RolesAllowed({ "User", "Admin" })
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -42,6 +44,7 @@ public class UserController {
         return userService.updateUser(user);
     }
 
+    @RolesAllowed({ "User", "Admin" })
     @DELETE
     @Path("/{id}")
     @Produces

@@ -15,6 +15,7 @@ import javax.ws.rs.core.SecurityContext;
 import java.util.List;
 
 @Path("/places")
+@RolesAllowed({ "User", "Admin" })
 @Tag(name = "Places", description = "Handling of places")
 public class PlaceController {
 

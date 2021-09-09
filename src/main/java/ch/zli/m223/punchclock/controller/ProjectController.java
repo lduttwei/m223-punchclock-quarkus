@@ -14,6 +14,8 @@ import javax.ws.rs.core.SecurityContext;
 import java.util.List;
 
 @Path("/projects")
+@RolesAllowed({ "User", "Admin" })
+
 @Tag(name = "Projects", description = "Handling of projects")
 public class ProjectController {
 
