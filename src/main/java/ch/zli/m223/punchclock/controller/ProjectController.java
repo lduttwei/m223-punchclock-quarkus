@@ -29,11 +29,25 @@ public class ProjectController {
         return projectService.findAll();
     }
 
+    @DELETE
+    @Path("/{id}")
+    @Produces
+    public void delete(Long id, @Context SecurityContext ctx) {
+        projectService.remove(id);
+    }
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Project add(Project project, @Context SecurityContext ctx) {
         return projectService.creatProject(project);
+    }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Project put(Project project, @Context SecurityContext ctx) {
+        return projectService.updateProject(project);
     }
 
 }

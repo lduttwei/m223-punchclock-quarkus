@@ -22,13 +22,22 @@ public class ProjectService {
         return project;
     }
 
+    @Transactional
+    public Project updateProject(Project project) {
+        entityManager.merge(project);
+        return project;
+    }
+
+    @Transactional
+    public void remove(Long id) {
+        entityManager.remove(getProject(id));
+    }
+
+
     @SuppressWarnings("unchecked")
     public List<Project> findAll() {
         var query = entityManager.createQuery("FROM Project");
         return query.getResultList();
-    }
-    public boolean validateProject(Project project){
-        return entityManager.contains(project);
     }
 
     public Project getProject(Long id) {

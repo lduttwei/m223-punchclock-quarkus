@@ -34,4 +34,18 @@ public class UserController {
     public User add(User user, @Context SecurityContext ctx) {
         return userService.creatUser(user);
     }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public User put(User user, @Context SecurityContext ctx) {
+        return userService.updateUser(user);
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @Produces
+    public void delete(Long id, @Context SecurityContext ctx) {
+        userService.remove(id);
+    }
 }

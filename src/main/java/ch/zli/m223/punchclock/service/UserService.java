@@ -24,6 +24,17 @@ public class UserService {
         return user;
     }
 
+    @Transactional
+    public User updateUser(User user) {
+        entityManager.persist(user);
+        return user;
+    }
+
+    @Transactional
+    public void remove(Long id) {
+        entityManager.persist(getUser(id));
+    }
+
     @SuppressWarnings("unchecked")
     public List<User> findAll() {
         var query = entityManager.createQuery("FROM User");
