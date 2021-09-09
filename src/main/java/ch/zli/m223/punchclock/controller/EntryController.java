@@ -68,21 +68,9 @@ public class EntryController {
     }
 
     private void setEntry(Entry entry){
-        try {
             entry.setPlace(placeService.getPlace(entry.getPlace().getId()));
-        } catch (Exception exception) {
-            throw new BadRequestException();
-        }
-        try {
             entry.setUser(userService.getUser(entry.getUser().getId()));
-        } catch (Exception exception) {
-            throw new BadRequestException();
-        }
-        try {
             entry.setProject(projectService.getProject(entry.getProject().getId()));
-        } catch (Exception exception) {
-            throw new BadRequestException();
-        }
     }
 
 

@@ -1,6 +1,7 @@
 package ch.zli.m223.punchclock.domain;
 
 import javax.persistence.*;
+import javax.ws.rs.BadRequestException;
 import java.time.LocalDateTime;
 
 @Entity
@@ -10,7 +11,7 @@ public class Entry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private User user;
 
     @ManyToOne
@@ -37,7 +38,10 @@ public class Entry {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(User user) throws BadRequestException {
+        if ( user == null ){
+            throw new BadRequestException();
+        }
         this.user = user;
     }
 
@@ -45,7 +49,7 @@ public class Entry {
         return place;
     }
 
-    public void setPlace(Place place) {
+    public void setPlace(Place place) throws BadRequestException {
         this.place = place;
     }
 
@@ -53,7 +57,7 @@ public class Entry {
         return project;
     }
 
-    public void setProject(Project project) {
+    public void setProject(Project project) throws BadRequestException{
         this.project = project;
     }
 
