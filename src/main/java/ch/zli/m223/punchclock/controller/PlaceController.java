@@ -4,6 +4,7 @@ import ch.zli.m223.punchclock.domain.Place;
 import ch.zli.m223.punchclock.service.PlaceService;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
@@ -29,10 +30,24 @@ public class PlaceController {
         return placeService.findAll();
     }
 
+    @DELETE
+    @Path("/{id}")
+    @Produces
+    public void delete(@PathParam Long id, @Context SecurityContext ctx){
+        placeService.remove(id);
+    }
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Place add(Place place, @Context SecurityContext ctx) {
         return placeService.createPlace(place);
+    }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Place put(Place place, @Context SecurityContext ctx) {
+        return placeService.updatePlace(place);
     }
 }

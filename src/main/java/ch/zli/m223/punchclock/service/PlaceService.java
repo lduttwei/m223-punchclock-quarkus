@@ -21,6 +21,16 @@ public class PlaceService {
         entityManager.persist(place);
         return place;
     }
+    @Transactional
+    public Place updatePlace(Place place) {
+        entityManager.merge(place);
+        return place;
+    }
+
+    @Transactional
+    public void remove(Long id) {
+        entityManager.remove(getPlace(id));
+    }
 
     @SuppressWarnings("unchecked")
     public List<Place> findAll() {
