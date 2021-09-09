@@ -10,15 +10,12 @@ public class Entry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     @ManyToOne
     private User user;
 
-    @Column(nullable = true)
     @ManyToOne
     private Place place;
 
-    @Column(nullable = true)
     @ManyToOne
     private Project project;
 
