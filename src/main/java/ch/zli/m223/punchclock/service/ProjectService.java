@@ -30,4 +30,8 @@ public class ProjectService {
     public boolean validateProject(Project project){
         return entityManager.contains(project);
     }
+
+    public Project getProject(Long id) {
+        return entityManager.find(Project.class, id);
+    }
 }

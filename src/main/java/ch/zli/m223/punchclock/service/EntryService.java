@@ -8,9 +8,6 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import ch.zli.m223.punchclock.domain.Entry;
-import ch.zli.m223.punchclock.domain.Place;
-import ch.zli.m223.punchclock.domain.Project;
-import ch.zli.m223.punchclock.domain.User;
 
 @ApplicationScoped
 public class EntryService {
@@ -37,9 +34,14 @@ public class EntryService {
     }
 
     @Transactional
-    public Entry remove(Long id) {
-        Entry entry = getEntry(id);
+    public Entry updateEntry(Entry entry) {
+        entityManager.merge(entry);
         return entry;
+    }
+
+    @Transactional
+    public void removeEntry(Long id) {
+        entityManager.remove(getEntry(id));
     }
 
     @SuppressWarnings("unchecked")

@@ -15,7 +15,6 @@ import java.util.List;
 
 @Path("/projects")
 @Tag(name = "Projects", description = "Handling of projects")
-@RolesAllowed({ "User", "Admin" })
 public class ProjectController {
 
     @Inject

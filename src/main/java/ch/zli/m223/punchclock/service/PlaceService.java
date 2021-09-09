@@ -27,8 +27,8 @@ public class PlaceService {
         var query = entityManager.createQuery("FROM Place");
         return query.getResultList();
     }
-    public boolean validatePlace(Place place){
-        return entityManager.contains(place);
+    public Place getPlace(Long id){
+        return entityManager.find(Place.class, id);
     }
 
 }

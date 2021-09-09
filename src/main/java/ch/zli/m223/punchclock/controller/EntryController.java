@@ -10,8 +10,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
 
 import ch.zli.m223.punchclock.domain.Place;
-import ch.zli.m223.punchclock.domain.Project;
-import ch.zli.m223.punchclock.domain.User;
 import ch.zli.m223.punchclock.service.PlaceService;
 import ch.zli.m223.punchclock.service.ProjectService;
 import ch.zli.m223.punchclock.service.UserService;
@@ -20,10 +18,10 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import ch.zli.m223.punchclock.domain.Entry;
 import ch.zli.m223.punchclock.service.EntryService;
+import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
 @Path("/entries")
 @Tag(name = "Entries", description = "Handling of entries")
-@RolesAllowed({ "User", "Admin" })
 public class EntryController {
 
     @Inject
@@ -31,8 +29,11 @@ public class EntryController {
 
     @Inject
     EntryService entryService;
+    @Inject
     UserService userService;
+    @Inject
     ProjectService projectService;
+    @Inject
     PlaceService placeService;
 
 
@@ -42,27 +43,47 @@ public class EntryController {
         return entryService.findAll();
     }
 
+    @DELETE
+    @Path("/{id}")
+    @Produces
+    public void delete(@PathParam Long id, @Context SecurityContext ctx) {
+        entryService.removeEntry(id);
+    }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Entry put(Entry entry, @Context SecurityContext ctx) {
+        setEntry(entry);
+        return entryService.updateEntry(entry);
+    }
+
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Entry add(Entry entry, @Context SecurityContext ctx) {
-        if ( validate(entry) ){
+        setEntry(entry);
+        return entryService.createEntry(entry);
+    }
+
+    private void setEntry(Entry entry){
+        try {
+            entry.setPlace(placeService.getPlace(entry.getPlace().getId()));
+        } catch (Exception exception) {
             throw new BadRequestException();
         }
-       return entryService.createEntry(entry);
-    }
-    public boolean validate(Entry entry){
-        if ( !placeService.validatePlace(entry.getPlace())){
-            return false;
+        try {
+            entry.setUser(userService.getUser(entry.getUser().getId()));
+        } catch (Exception exception) {
+            throw new BadRequestException();
         }
-        if ( !projectService.validateProject(entry.getProject())) {
-            return false;
+        try {
+            entry.setProject(projectService.getProject(entry.getProject().getId()));
+        } catch (Exception exception) {
+            throw new BadRequestException();
         }
-        return userService.validateUser(entry.getUser());
     }
-
-
-
 
 
 }

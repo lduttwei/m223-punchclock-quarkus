@@ -17,6 +17,7 @@ public class UserService {
     public UserService() {
     }
 
+
     @Transactional
     public User creatUser(User user) {
         entityManager.persist(user);
@@ -37,5 +38,8 @@ public class UserService {
         var query = entityManager.createQuery("FROM User where username = :username");
         query.setParameter("username", username);
         return (User) query.getSingleResult();
+    }
+    public User getUser(Long id){
+        return entityManager.find(User.class, id);
     }
 }

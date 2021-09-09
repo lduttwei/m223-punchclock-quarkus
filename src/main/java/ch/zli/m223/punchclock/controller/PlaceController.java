@@ -15,7 +15,6 @@ import java.util.List;
 
 @Path("/places")
 @Tag(name = "Places", description = "Handling of places")
-@RolesAllowed({ "User", "Admin" })
 public class PlaceController {
 
     @Inject
