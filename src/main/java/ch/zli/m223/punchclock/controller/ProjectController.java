@@ -27,20 +27,35 @@ public class ProjectController {
     @Inject
     ProjectService projectService;
 
+    /**
+     * Returns all projects saved in database
+     * @param ctx authentication
+     * @return all projects
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Project> list(@Context SecurityContext ctx) {
         return projectService.findAll();
     }
 
+    /**
+     * Removes specific project by id
+     * @param id id to identify project
+     * @param ctx authentication
+     */
     @DELETE
     @Path("/{id}")
     @Produces (MediaType.TEXT_PLAIN)
-    public String delete(@PathParam Long id, @Context SecurityContext ctx) {
+    public void delete(@PathParam Long id, @Context SecurityContext ctx) {
         projectService.remove(id);
-        return "HALlO";
     }
 
+    /**
+     * Adds a project to the database
+     * @param project project to add
+     * @param ctx authentication
+     * @return added project
+     */
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -48,6 +63,12 @@ public class ProjectController {
         return projectService.creatProject(project);
     }
 
+    /**
+     * updates existing project
+     * @param project project with new values
+     * @param ctx authentication
+     * @return new project
+     */
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)

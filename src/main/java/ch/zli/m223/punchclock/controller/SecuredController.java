@@ -23,7 +23,8 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 @RequestScoped 
 public class SecuredController {
     @Inject
-    JsonWebToken jwt; 
+    JsonWebToken jwt;
+
 
     @GET()
     @Path("permit-all")

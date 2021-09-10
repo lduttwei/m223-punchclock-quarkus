@@ -9,7 +9,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
 
-import ch.zli.m223.punchclock.domain.Place;
 import ch.zli.m223.punchclock.service.PlaceService;
 import ch.zli.m223.punchclock.service.ProjectService;
 import ch.zli.m223.punchclock.service.UserService;
@@ -38,12 +37,22 @@ public class EntryController {
     PlaceService placeService;
 
 
+    /**
+     * Returns a list of each entry saved in the database.
+     * @param ctx authentication
+     * @return All entries
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Entry> list(@Context SecurityContext ctx) {
         return entryService.findAll();
     }
 
+    /**
+     * Deletes a specific entry by id
+     * @param id entry to delete
+     * @param ctx authentication
+     */
     @DELETE
     @Path("/{id}")
     @Produces
@@ -51,6 +60,12 @@ public class EntryController {
         entryService.removeEntry(id);
     }
 
+    /**
+     * Updates the content of a specific Entry
+     * @param entry entry with applied changes
+     * @param ctx authentication
+     * @return updated entry
+     */
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -59,6 +74,12 @@ public class EntryController {
         return entryService.updateEntry(entry);
     }
 
+    /**
+     * Saves an entry in the database
+     * @param entry entry to save
+     * @param ctx authentication
+     * @return returns saved entry
+     */
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -67,6 +88,10 @@ public class EntryController {
         return entryService.createEntry(entry);
     }
 
+    /**
+     * Adds the correct Objects to create connections.
+     * @param entry
+     */
     private void setEntry(Entry entry){
             entry.setPlace(placeService.getPlace(entry.getPlace().getId()));
             entry.setUser(userService.getUser(entry.getUser().getId()));

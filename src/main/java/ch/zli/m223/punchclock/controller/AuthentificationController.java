@@ -21,6 +21,7 @@ import io.smallrye.jwt.build.Jwt;
 * Do not use in productive environments!
 */
 
+
 @Tag(name = "Authorization", description = "Sample to manage Authorization")
 @Path("/auth")
 public class AuthentificationController {

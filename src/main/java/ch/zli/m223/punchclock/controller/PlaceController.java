@@ -25,12 +25,22 @@ public class PlaceController {
     @Inject
     PlaceService placeService;
 
+    /**
+     * Returns a list of all places
+     * @param ctx authentication
+     * @return all places
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Place> list(@Context SecurityContext ctx) {
         return placeService.findAll();
     }
 
+    /**
+     * Removes specific place by id
+     * @param id id to identify place
+     * @param ctx authentication
+     */
     @DELETE
     @Path("/{id}")
     @Produces
@@ -38,6 +48,12 @@ public class PlaceController {
         placeService.remove(id);
     }
 
+    /**
+     * Adds a place to database
+     * @param place place which will be added
+     * @param ctx authentication
+     * @return place which has been added
+     */
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -45,6 +61,12 @@ public class PlaceController {
         return placeService.createPlace(place);
     }
 
+    /**
+     * updates a place
+     * @param place place with changed values
+     * @param ctx authentication
+     * @return changed place
+     */
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)

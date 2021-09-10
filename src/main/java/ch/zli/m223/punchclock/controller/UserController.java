@@ -23,6 +23,11 @@ public class UserController {
     @Inject
     UserService userService;
 
+    /**
+     * Returns list of all existing users
+     * @param ctx authentication
+     * @return all users
+     */
     @RolesAllowed({ "User", "Admin" })
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -30,6 +35,12 @@ public class UserController {
         return userService.findAll();
     }
 
+    /**
+     * Creates user in database
+     * @param user user to add to database
+     * @param ctx authentication
+     * @return new user
+     */
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -37,6 +48,12 @@ public class UserController {
         return userService.creatUser(user);
     }
 
+    /**
+     * Updates existing user
+     * @param user user with different values
+     * @param ctx authentication
+     * @return user with updated values
+     */
     @RolesAllowed({ "User", "Admin" })
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -45,6 +62,11 @@ public class UserController {
         return userService.updateUser(user);
     }
 
+    /**
+     * Removes user from database by id
+     * @param id id to identify user
+     * @param ctx authentication
+     */
     @RolesAllowed({ "User", "Admin" })
     @DELETE
     @Path("/{id}")
