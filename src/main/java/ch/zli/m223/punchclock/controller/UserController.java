@@ -4,6 +4,7 @@ import ch.zli.m223.punchclock.domain.User;
 import ch.zli.m223.punchclock.service.UserService;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
@@ -48,7 +49,7 @@ public class UserController {
     @DELETE
     @Path("/{id}")
     @Produces
-    public void delete(Long id, @Context SecurityContext ctx) {
+    public void delete(@PathParam Long id, @Context SecurityContext ctx) {
         userService.remove(id);
     }
 }

@@ -26,13 +26,13 @@ public class UserService {
 
     @Transactional
     public User updateUser(User user) {
-        entityManager.persist(user);
+        entityManager.merge(user);
         return user;
     }
 
     @Transactional
     public void remove(Long id) {
-        entityManager.persist(getUser(id));
+        entityManager.remove(getUser(id));
     }
 
     @SuppressWarnings("unchecked")

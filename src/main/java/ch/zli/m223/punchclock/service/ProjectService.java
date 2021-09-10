@@ -6,6 +6,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import javax.ws.rs.BadRequestException;
 import java.util.List;
 
 @ApplicationScoped
@@ -41,6 +42,11 @@ public class ProjectService {
     }
 
     public Project getProject(Long id) {
-        return entityManager.find(Project.class, id);
+        try {
+            return entityManager.find(Project.class, id);
+        } catch (Exception exception) {
+            throw new BadRequestException();
+        }
+
     }
 }
