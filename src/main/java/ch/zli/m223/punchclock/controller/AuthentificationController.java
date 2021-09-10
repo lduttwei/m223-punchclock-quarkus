@@ -5,11 +5,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.NotAuthorizedException;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 import ch.zli.m223.punchclock.domain.User;
@@ -38,16 +34,21 @@ public class AuthentificationController {
     @Consumes(MediaType.APPLICATION_JSON)
     public LoginResultViewModel login(LoginViewModel loginViewModel){
 
-        User user = userService.getUser(loginViewModel.getUsername());
+        User user;
+        try {
+            user = userService.getUser(loginViewModel.getUsername());
+        } catch (Exception exception) {
+            throw new BadRequestException();
+        }
         if(loginViewModel.getPassword().equals(user.getPassword())){
             String token =
-            Jwt.issuer("https://zli.ch/issuer") 
-              .upn("user@zli.ch") 
-              .groups(new HashSet<>(Arrays.asList("User", "Admin"))) 
+            Jwt.issuer("https://zli.ch/issuer")
+              .upn("user@zli.ch")
+              .groups(new HashSet<>(Arrays.asList("User", "Admin")))
               .claim(Claims.birthdate.name(), "2001-07-13")
-              .expiresIn(Duration.ofHours(1)) 
+              .expiresIn(Duration.ofHours(1))
             .sign();
-            return new LoginResultViewModel(token);
+            return new LoginResultViewModel(token, user.getId());
         }
         throw new NotAuthorizedException("User ["+loginViewModel.getUsername()+"] not known");
     }

@@ -1,6 +1,7 @@
 const URL = 'http://localhost:8080';
 let entries = [];
 
+/*
 const dateAndTimeToDate = (dateString, timeString) => {
     return new Date(`${dateString}T${timeString}`).toISOString();
 };
@@ -61,3 +62,4 @@ document.addEventListener('DOMContentLoaded', function(){
     createEntryForm.addEventListener('submit', createEntry);
     indexEntries();
 });
+*/

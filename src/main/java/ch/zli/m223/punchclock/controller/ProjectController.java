@@ -4,9 +4,11 @@ import ch.zli.m223.punchclock.domain.Project;
 import ch.zli.m223.punchclock.service.ProjectService;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
+import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -33,9 +35,10 @@ public class ProjectController {
 
     @DELETE
     @Path("/{id}")
-    @Produces
-    public void delete(Long id, @Context SecurityContext ctx) {
+    @Produces (MediaType.TEXT_PLAIN)
+    public String delete(@PathParam Long id, @Context SecurityContext ctx) {
         projectService.remove(id);
+        return "HALlO";
     }
 
     @POST
